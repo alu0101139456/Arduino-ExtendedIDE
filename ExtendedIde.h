@@ -2,21 +2,30 @@
 #include "Timer.h"
 #include <vector>
 #include <utility>
+#include <Arduino.h>
 
 class ExtendedIde {
 
 private:
     int pin_;
     float freq_;
-    Clock_t *clock_ = nullptr;
+    Clock_t *clock_ = NULL;
     std::pair<int, float> prescAndFreq_;
 
 public:
-
+    // 5 = 0101
+    // 9 = 1001
+    // 5&9 = 0001
+    // 1001 = 1001 & (0100 << 3) 1011 1001
+    // 0000 
     ExtendedIde(int pin, float freq);
     void SelectTimerWithPin();
-    void PrintParamters();
+    void PrintParameters();
     void SelectPrescaler();
+    void ModifyRegisterTimer0();
+    void ModifyRegisterTimer1();
+    void ModifyRegisterTimer2();
+
 };
 
 //Frecuencia Timers
@@ -43,5 +52,5 @@ Timer2                                                    Pines       3      11
 64 -> 16Mh/64 = 250KHz              250KHz/256 = 976,5625Hz
 256 -> 16Mh/256 = 62,5KH          62.500Hz/256 = 244,14Hz
 1024 -> 16Mh/1024 = 15,625Hz      15,625Hz/256 = 0.061Hz
-(Entiendo que no hay más convinaciones)
+(Entiendo que no hay más combinaciones)
 */
