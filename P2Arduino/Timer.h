@@ -1,5 +1,7 @@
-#include<vector>
-#include<utility>
+
+#include <Vector.h>
+#include "pair_t.h"
+
 
 
 /////////////////////////////////////////////////////////////////
@@ -11,8 +13,9 @@ class Clock_t {
  public:
   
   Clock_t() {}
-  virtual Pair<int, float> GetAproximateFreq(float)=0;
+  virtual pair_t GetAproximateFreq(float)=0;
   virtual int getNumberTimer()=0;
+
   ~Clock_t() {}
 };
 
@@ -21,27 +24,27 @@ class Clock_t {
 /////////////////////////////////////////////////////////////////
 class Timer8:public Clock_t {
  private:
-  Vector<Pair<int,float>> frequencies_;
+  Vector<pair_t> frequencies_;
  public:
   Timer8() {
     SetFrequencies();
   }
   void SetFrequencies() {
     //8MHz/1 = 16MHz ---> 16MHz/256 = 62.500Hz
-    frequencies_.push_back(std::make_pair(1, 31250));
+    frequencies_.push_back(pair_t(1, 31250));
     //8MHz/8 = 1MHz  ---> 1MHz/256 = 3.906Hz
-    frequencies_.push_back(std::make_pair(8, 3906));
+    frequencies_.push_back(pair_t(8, 3906));
     //8MHz/64 = 250KHz  ---> 250KHz/256 = 976,5625Hz
-    frequencies_.push_back(std::make_pair(64, 488.28));
+    frequencies_.push_back(pair_t(64, 488.28));
     //8MHz/256 = 62,5KH  ---> 62.500Hz/256 = 244,14Hz
-    frequencies_.push_back(std::make_pair(256, 122.07));
+    frequencies_.push_back(pair_t(256, 122.07));
     //8MHz/1024 = 15,625Hz  ---> 15,625Hz/256 = 0.061Hz
-    frequencies_.push_back(std::make_pair(1024, 0.031));
+    frequencies_.push_back(pair_t(1024, 0.031));
   }
 
-  Pair<int, float> GetAproximateFreq(float aprox) override {      
+  pair_t GetAproximateFreq(float aprox) override {      
     for (size_t i = 0; i < frequencies_.size(); i++) {
-      if ( aprox > frequencies_[i].second ) {
+      if ( aprox > frequencies_[i].val_2() ) {
         return frequencies_[i];
       }    
     }
@@ -59,26 +62,26 @@ class Timer8:public Clock_t {
 
 class Timer16 :public Clock_t {
 private:
-  Vector<Pair<int,float>> frequencies_;
+  Vector<pair_t> frequencies_;
 public:
   Timer16() {
     SetFrequencies();
   }
   void SetFrequencies() {
     //16Mh/1 = 16MHz ---> 16MHz/256 = 62.500Hz
-    frequencies_.push_back(std::make_pair(1, 62500));
+    frequencies_.push_back(pair_t(1, 62500));
     //16Mh/8 = 2MHz  ---> 2MHz/256 = 7.812,5Hz
-    frequencies_.push_back(std::make_pair(8, 7812.5));
+    frequencies_.push_back(pair_t(8, 7812.5));
     //16Mh/64 = 250KHz  ---> 250KHz/256 = 976,5625Hz
-    frequencies_.push_back(std::make_pair(64, 976.5625));
+    frequencies_.push_back(pair_t(64, 976.5625));
     //16Mh/256 = 62,5KH  ---> 62.500Hz/256 = 244,14Hz
-    frequencies_.push_back(std::make_pair(256, 244.14));    
+    frequencies_.push_back(pair_t(256, 244.14));    
     //16Mh/1024 = 15,625Hz  ---> 15,625Hz/256 = 0.061Hz
-    frequencies_.push_back(std::make_pair(1024, 0.0605));;
+    frequencies_.push_back(pair_t(1024, 0.0605));
   }
-  Pair<int, float> GetAproximateFreq(float aprox) override {    
+  pair_t GetAproximateFreq(float aprox) override {    
     for (size_t i = 0; i < frequencies_.size(); i++) {
-      if ( aprox > frequencies_[i].second ) {
+      if ( aprox > frequencies_[i].val_2() ) {
         return frequencies_[i];
       }    
     }
@@ -88,14 +91,3 @@ public:
   ~Timer16(){}
 
 };
-
-
-
-
-
-
-
-
-
-
-
