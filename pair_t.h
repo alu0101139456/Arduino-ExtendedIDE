@@ -7,6 +7,7 @@ private:
   float freq_;
 public:
 
+  pair_t() {}
   pair_t(int pre, float freq) {
     pre_ = pre;
     freq_ = freq;

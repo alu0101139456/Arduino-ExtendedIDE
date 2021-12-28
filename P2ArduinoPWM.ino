@@ -1,34 +1,26 @@
-
+#include "ExtendedIde.h"
 #include "Timer.h"
-#include "pair_t.h"
-#include <Vector.h>
-#include <Arduino.h>
 
-class ExtendedIde {
 
-private:
-    int pin_;
-    float freq_;
-    Clock_t *clock_ = NULL;
-    pair_t prescAndFreq_;
+unsigned long myTime;
 
-public:
-    // 5 = 0101
-    // 9 = 1001
-    // 5&9 = 0001
-    // 1001 = 1001 & (0100 << 3) 1011 1001
-    // 0000 
-    ExtendedIde(int pin, float freq);
-    void SelectTimerWithPin();
-    void PrintParameters();
-    void SelectPrescaler();
-    void ModifyRegisterTimer0();
-    void ModifyRegisterTimer1();
-    void ModifyRegisterTimer2();
+void setup() {
+  Serial.begin(115200);
+  
+  //Serial.println("LlaadaExtendedIde");
+  ExtendedIde test(5 ,21300);
 
-};
 
-//Frecuencia Timers
+  
+  }
+
+void loop() {
+
+  myTime = millis();
+
+  Serial.println(myTime); // prints time since program started
+  delay(1000);   
+}
 /*
 Timer0                                                    Pines        5     6
 1    -> 8Mh/1    =  8MHz           8MHz/256 = 31250Hz                OC0B   OC0B   
@@ -45,7 +37,7 @@ Timer2                                                    Pines       3      11
 1024 -> 8Mh/1024 = 7,8125Hz      7,8125/256 = 0,031Hz 
 
 
-//Frecuencia Timer 1 16MH
+//Frecuencia Timer 1 16MH           pin 9 y 10
 
 1 -> 16Mh/1 = 16MHz                  16MHz/256 = 62.500Hz
 8 -> 16Mh/8 = 2MHz                    2MHz/256 = 7.812,5Hz

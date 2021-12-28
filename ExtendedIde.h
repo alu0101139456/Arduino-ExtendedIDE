@@ -1,7 +1,6 @@
 
 #include "Timer.h"
-#include <vector>
-#include <utility>
+
 #include <Arduino.h>
 
 class ExtendedIde {
@@ -10,8 +9,9 @@ private:
     int pin_;
     float freq_;
     Clock_t *clock_ = NULL;
-    Pair<int, float> prescAndFreq_;
-
+    //pair_t prescAndFreq_();
+    std::pair<int, float> prescAndFreq_;
+    
 public:
     // 5 = 0101
     // 9 = 1001
